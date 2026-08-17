@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>HealthStack â€” Salud y Bienestar Â· desarrolladormadrid</title>
+    <meta name="description" content="HealthStack - Tu compaÃ±ero de salud y bienestar. Rastrea actividad, nutriciÃ³n, sueÃ±o y mÃ¡s.">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#38bdf8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                        <circle cx="14" cy="14" r="13" stroke="#38bdf8" stroke-width="2"/>
+                        <path d="M14 6L14 22M6 14L22 14" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="14" cy="14" r="4" fill="#38bdf8" opacity="0.3"/>
+                    </svg>
+                    <span class="logo-text">HealthStack</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="lang-selector" id="langSelector">
+                    <button class="lang-btn" id="langBtn" aria-label="Idioma">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        <span id="currentLang">ES</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button class="lang-option active" data-lang="es">ðŸ‡ªðŸ‡¸ EspaÃ±ol</button>
+                        <button class="lang-option" data-lang="en">ðŸ‡¬ðŸ‡§ English</button>
+                        <button class="lang-option" data-lang="hi">ðŸ‡®ðŸ‡³ à¤¹à¤¿à¤¨à¥à¤¦à¥€</button>
+                        <button class="lang-option" data-lang="zh">ðŸ‡¨ðŸ‡³ ä¸­æ–‡</button>
+                        <button class="lang-option" data-lang="ru">ðŸ‡·ðŸ‡º Ð ÑƒÑÑÐºÐ¸Ð¹</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content" id="mainContent">
+            <section class="dashboard active" id="dashboard">
+                <div class="greeting-section">
+                    <h1 class="greeting" id="greeting"></h1>
+                    <p class="date-text" id="dateText"></p>
+                </div>
+
+                <div class="health-score-card">
+                    <div class="score-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(56,189,248,0.15)" stroke-width="8"/>
+                            <circle cx="60" cy="60" r="52" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="65" transform="rotate(-90 60 60)" class="score-circle"/>
+                        </svg>
+                        <div class="score-value">
+                            <span class="score-number" id="healthScore">80</span>
+                            <span class="score-label" data-i18n="score">PuntuaciÃ³n</span>
+                        </div>
+                    </div>
+                    <div class="score-info">
+                        <h3 data-i18n="healthScore">Salud General</h3>
+                        <p data-i18n="healthScoreDesc">Tu puntuaciÃ³n de hoy se ve genial. Â¡Sigue asÃ­!</p>
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card" data-metric="steps">
+                        <div class="metric-icon steps-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 16l4-8 4 8M16 16l4-8 4 8"/>
+                                <path d="M2 20h20"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="stepsValue">8,432</span>
+                            <span class="metric-label" data-i18n="steps">Pasos</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill" style="width: 84%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-metric="heart">
+                        <div class="metric-icon heart-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="heartValue">72</span>
+                            <span class="metric-label" data-i18n="heartRate">Lpm</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill heart-fill" style="width: 72%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-metric="sleep">
+                        <div class="metric-icon sleep-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="sleepValue">7.5h</span>
+                            <span class="metric-label" data-i18n="sleep">SueÃ±o</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill sleep-fill" style="width: 94%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-metric="water">
+                        <div class="metric-icon water-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="waterValue">1.8L</span>
+                            <span class="metric-label" data-i18n="water">Agua</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill water-fill" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-metric="calories">
+                        <div class="metric-icon calories-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22c-4.97 0-9-2.69-9-6v-.01C3 11.69 7.03 9 12 9s9 2.69 9 6.99V16c0 3.31-4.03 6-9 6z"/>
+                                <path d="M12 2v7"/>
+                                <path d="M8 4l4 5 4-5"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="caloriesValue">1,850</span>
+                            <span class="metric-label" data-i18n="calories">Kcal</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill calories-fill" style="width: 74%"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-card" data-metric="weight">
+                        <div class="metric-icon weight-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 12h8M12 8v8"/>
+                            </svg>
+                        </div>
+                        <div class="metric-info">
+                            <span class="metric-value" id="weightValue">72kg</span>
+                            <span class="metric-label" data-i18n="weight">Peso</span>
+                        </div>
+                        <div class="metric-bar">
+                            <div class="metric-bar-fill weight-fill" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weekly-chart-card">
+                    <h3 data-i18n="weeklyActivity">Actividad Semanal</h3>
+                    <div class="chart-container">
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="activitySection" style="display:none">
+                <div class="section-header">
+                    <h2 data-i18n="activity">Actividad</h2>
+                </div>
+                <div class="activity-cards">
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h4 data-i18n="running">Carrera</h4>
+                            <p class="activity-detail" data-i18n="runningDetail">5.2 km Â· 32 min</p>
+                        </div>
+                        <span class="activity-calories">-320 kcal</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                <line x1="15" y1="9" x2="15.01" y2="9"/>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h4 data-i18n="yoga">Yoga</h4>
+                            <p class="activity-detail" data-i18n="yogaDetail">45 min Â· RelajaciÃ³n</p>
+                        </div>
+                        <span class="activity-calories">-180 kcal</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                <path d="M18 20V10M12 20V4M6 20v-6"/>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h4 data-i18n="strength">Fuerza</h4>
+                            <p class="activity-detail" data-i18n="strengthDetail">60 min Â· Tren superior</p>
+                        </div>
+                        <span class="activity-calories">-280 kcal</span>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <div class="activity-info">
+                            <h4 data-i18n="cycling">Ciclismo</h4>
+                            <p class="activity-detail" data-i18n="cyclingDetail">12.5 km Â· 45 min</p>
+                        </div>
+                        <span class="activity-calories">-400 kcal</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="nutritionSection" style="display:none">
+                <div class="section-header">
+                    <h2 data-i18n="nutrition">NutriciÃ³n</h2>
+                </div>
+                <div class="macro-grid">
+                    <div class="macro-card protein">
+                        <div class="macro-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(56,189,248,0.15)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#38bdf8" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="66" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+                            </svg>
+                            <span class="macro-value">65g</span>
+                        </div>
+                        <span class="macro-label" data-i18n="protein">ProteÃ­na</span>
+                        <span class="macro-target">/ 80g</span>
+                    </div>
+                    <div class="macro-card carbs">
+                        <div class="macro-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(167,139,250,0.15)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#a78bfa" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="79" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+                            </svg>
+                            <span class="macro-value">220g</span>
+                        </div>
+                        <span class="macro-label" data-i18n="carbs">Carbohidratos</span>
+                        <span class="macro-target">/ 280g</span>
+                    </div>
+                    <div class="macro-card fats">
+                        <div class="macro-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(245,158,11,0.15)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="264" stroke-dashoffset="106" transform="rotate(-90 50 50)" stroke-linecap="round"/>
+                            </svg>
+                            <span class="macro-value">52g</span>
+                        </div>
+                        <span class="macro-label" data-i18n="fats">Grasas</span>
+                        <span class="macro-target">/ 70g</span>
+                    </div>
+                </div>
+                <div class="meal-log">
+                    <h3 data-i18n="todayMeals">Comidas de Hoy</h3>
+                    <div class="meal-item">
+                        <span class="meal-emoji">ðŸŒ…</span>
+                        <div class="meal-info">
+                            <span class="meal-name" data-i18n="breakfast">Desayuno</span>
+                            <span class="meal-desc" data-i18n="breakfastDesc">Avena, frutas, cafÃ©</span>
+                        </div>
+                        <span class="meal-cal">420 kcal</span>
+                    </div>
+                    <div class="meal-item">
+                        <span class="meal-emoji">â˜€ï¸</span>
+                        <div class="meal-info">
+                            <span class="meal-name" data-i18n="lunch">Almuerzo</span>
+                            <span class="meal-desc" data-i18n="lunchDesc">Pollo, arroz, ensalada</span>
+                        </div>
+                        <span class="meal-cal">650 kcal</span>
+                    </div>
+                    <div class="meal-item">
+                        <span class="meal-emoji">ðŸŒ™</span>
+                        <div class="meal-info">
+                            <span class="meal-name" data-i18n="dinner">Cena</span>
+                            <span class="meal-desc" data-i18n="dinnerDesc">SalmÃ³n, verduras</span>
+                        </div>
+                        <span class="meal-cal">580 kcal</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="recordsSection" style="display:none">
+                <div class="section-header">
+                    <h2 data-i18n="healthRecords">Registros de Salud</h2>
+                </div>
+                <div class="records-list">
+                    <div class="record-item">
+                        <div class="record-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <div class="record-info">
+                            <span class="record-title" data-i18n="bloodPressure">PresiÃ³n Arterial</span>
+                            <span class="record-date">15/08/2026</span>
+                        </div>
+                        <span class="record-value normal">120/80</span>
+                    </div>
+                    <div class="record-item">
+                        <div class="record-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 6v6l4 2"/>
+                            </svg>
+                        </div>
+                        <div class="record-info">
+                            <span class="record-title" data-i18n="glucose">Glucosa</span>
+                            <span class="record-date">14/08/2026</span>
+                        </div>
+                        <span class="record-value">95 mg/dL</span>
+                    </div>
+                    <div class="record-item">
+                        <div class="record-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <div class="record-info">
+                            <span class="record-title" data-i18n="cholesterol">Colesterol</span>
+                            <span class="record-date">10/08/2026</span>
+                        </div>
+                        <span class="record-value">185 mg/dL</span>
+                    </div>
+                    <div class="record-item">
+                        <div class="record-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                                <path d="M12 22c-4.97 0-9-2.69-9-6v-.01C3 11.69 7.03 9 12 9s9 2.69 9 6.99V16c0 3.31-4.03 6-9 6z"/>
+                            </svg>
+                        </div>
+                        <div class="record-info">
+                            <span class="record-title" data-i18n="bmi">IMC</span>
+                            <span class="record-date">01/08/2026</span>
+                        </div>
+                        <span class="record-value">23.5</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="settingsSection" style="display:none">
+                <div class="section-header">
+                    <h2 data-i18n="settings">Ajustes</h2>
+                </div>
+                <div class="settings-list">
+                    <div class="settings-group">
+                        <h3 data-i18n="profile">Perfil</h3>
+                        <div class="setting-item">
+                            <span data-i18n="userName">Nombre</span>
+                            <input type="text" id="userName" class="setting-input" placeholder="Usuario" data-i18n-placeholder="userNamePlaceholder">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="userAge">Edad</span>
+                            <input type="number" id="userAge" class="setting-input" placeholder="25">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="userWeight">Peso (kg)</span>
+                            <input type="number" id="userWeight" class="setting-input" placeholder="72">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="userHeight">Altura (cm)</span>
+                            <input type="number" id="userHeight" class="setting-input" placeholder="175">
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3 data-i18n="goals">Metas Diarias</h3>
+                        <div class="setting-item">
+                            <span data-i18n="stepsGoal">Meta de pasos</span>
+                            <input type="number" id="stepsGoal" class="setting-input" placeholder="10000">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="waterGoal">Meta de agua (L)</span>
+                            <input type="number" id="waterGoal" class="setting-input" step="0.1" placeholder="2.5">
+                        </div>
+                        <div class="setting-item">
+                            <span data-i18n="caloriesGoal">Meta de calorÃ­as</span>
+                            <input type="number" id="caloriesGoal" class="setting-input" placeholder="2000">
+                        </div>
+                    </div>
+                    <button class="save-btn" id="saveSettings" data-i18n="save">Guardar</button>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="dashboard">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <span data-i18n="home">Inicio</span>
+            </button>
+            <button class="nav-btn" data-tab="activitySection">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                <span data-i18n="activity">Actividad</span>
+            </button>
+            <button class="nav-btn" data-tab="nutritionSection">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+                </svg>
+                <span data-i18n="nutrition">NutriciÃ³n</span>
+            </button>
+            <button class="nav-btn" data-tab="recordsSection">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+                <span data-i18n="records">Registros</span>
+            </button>
+            <button class="nav-btn" data-tab="settingsSection">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <span data-i18n="settings">Ajustes</span>
+            </button>
+        </nav>
+    </div>
+
+    <footer class="footer">
+        <a href="https://desarrolladormadrid.netlify.app/" target="_blank" rel="noopener">Creado por desarrolladormadrid</a>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
